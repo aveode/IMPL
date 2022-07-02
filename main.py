@@ -6,8 +6,7 @@ from getpass import getpass
 def request_api(link, info):
     req = requests.get(f"{link}{info}")
 
-    #return [req if req.status_code != "200"]
-    if req.status_code == "200":
+    if req.status_code == 200:
         return req
     else:
         raise RuntimeError
@@ -30,8 +29,6 @@ def main():
     password = getpass("\n\n- Enter password -\n-> ")
     hashPassword = sha1_password(password)
 
-    print(request_api("https://api.pwnedpasswords.com/range/", hashPassword[:5]))
-    return
     res = request_api("https://api.pwnedpasswords.com/range/", hashPassword[:5])
     count = analyze_response(res, hashPassword[5:])
 
